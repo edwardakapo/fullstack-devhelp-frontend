@@ -12,42 +12,24 @@ export default function Comments(props) {
   const [starredCommentId, setStarredCommentId] = useState(null);
 
 
-  /* useEffect(() => {
+  useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:3000/post/${props.postId}/comments`, { withCredentials: true })
-      .then((response) => {
-        setComments(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching comments:', error);
-        setLoading(false);
-      });
-  }, [props.postId]);  // Dependency array to refetch when postId changes
-*/
-
-useEffect(() => {
-  setLoading(true);
-  const timer = setTimeout(() => {
     axios.get(`${process.env.REACT_APP_SERVER_ENDPOINT}/post/${props.postId}/comments`, {} , { withCredentials: true })
-      .then((response) => {
-        setComments(response.data.comments);
-        setCorrectPost(response.data.correctPost)
-        if (response.data.correctPost) {  // Check if correctPost exists
-          setStarredCommentId(response.data.correctPost._id);
-        }
-        console.log(correctPost)
-        setLoading(false);
+    .then((response) => {
+      setComments(response.data.comments);
+      setCorrectPost(response.data.correctPost)
+      if (response.data.correctPost) {  // Check if correctPost exists
+        setStarredCommentId(response.data.correctPost._id);
+      }
+      console.log(correctPost)
+      setLoading(false);
 
-      })
-      .catch((error) => {
-        console.error('Error fetching comments:', error);
-        setLoading(false);
-      });
-  }, 100);  // Delay the request by 5000 milliseconds (5 seconds)
-
-    return () => clearTimeout(timer);
-  }, [props.postId, props.trigger, triggerReload, correctPost]); 
+    })
+    .catch((error) => {
+      console.error('Error fetching comments:', error);
+      setLoading(false);
+    });
+  }, [props.postId, props.trigger, triggerReload]);  // Dependency array to refetch when postId changes
 
   function starPost(commentId) {
     axios.patch(`${process.env.REACT_APP_SERVER_ENDPOINT}/post/${props.postId}/comments/${commentId}/setcorrect`, {} , { withCredentials: true })

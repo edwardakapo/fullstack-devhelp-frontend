@@ -13,14 +13,16 @@ import Skeleton from '@mui/material/Skeleton';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
+  const mylocation = useLocation();
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState(getTabValueFromPath());
   const [posts, setPosts] = useState({ usersPosts: [], usersSavedPosts: [], usersStars: 0 });
-  const location = useLocation();
+  
+  console.log(mylocation)
 
   useEffect(() => {
     setValue(getTabValueFromPath());
-  }, [location.pathname]);
+  }, [mylocation.pathname]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,10 +42,10 @@ export default function ProfilePage() {
     };
 
     fetchData();
-  }, );
+  }, []);
 
   function getTabValueFromPath() {
-    const pathSegments = location.pathname.split('/');
+    const pathSegments = mylocation.pathname.split('/');
     const lastSegment = pathSegments[pathSegments.length - 1];
     return ['allposts', 'savedposts'].includes(lastSegment) ? lastSegment : 'allposts';
   }
