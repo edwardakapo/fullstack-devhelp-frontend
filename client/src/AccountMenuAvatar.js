@@ -40,7 +40,8 @@ export default function AccountMenuAvatar(props) {
 
   const logout = () => {
     // Remove the 'isLoggedIn' cookie
-    Cookies.remove('isLoggedIn');
+      localStorage.removeItem('isLoggedIn')
+      localStorage.removeItem('userInfo')
 
     // Make a request to the server's logout endpoint
     axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT}/logout`, {}, {withCredentials : true})

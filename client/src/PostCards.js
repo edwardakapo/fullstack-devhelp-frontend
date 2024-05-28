@@ -25,7 +25,7 @@ export default function PostCards(props) {
       setIsOpen(!isOpen)
     }
     const checkLoggedIn = () =>{
-         return Cookies.get('isLoggedIn') ? true : false;
+         return localStorage.getItem('isLoggedIn') === "true";
     }
     const doLike = () => {
       if (!checkLoggedIn()){

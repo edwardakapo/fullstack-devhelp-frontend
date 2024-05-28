@@ -29,17 +29,16 @@ const Styles2={
 
 export default function HeroSection() {
 
-  // Set initial state for isLoggedIn
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Get user picture from userInfo cookie if it exists
-  const userPic = Cookies.get('userInfo') ? JSON.parse(Cookies.get('userInfo')).picture : '';
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userData, setUsedData] = useState("")
 
   useEffect(() => {
-      // Check if the isLoggedIn cookie exists and is 'true'
-      const loggedIn = Cookies.get('isLoggedIn') === 'True';
-      // Set the state
-      setIsLoggedIn(loggedIn);
+      const loggedIn = localStorage.getItem('isLoggedIn') === 'true'; // check if isLoggedIn exists and is 'true'
+      setIsLoggedIn(loggedIn); // set the state
+
+      const userDataString = localStorage.getItem('userInfo');
+      const storedData = userData ? JSON.parse(userDataString) : ""
+      setUsedData(storedData)
   }, []);
 
 
@@ -119,7 +118,7 @@ export default function HeroSection() {
                 <div className="w-1/2 shadow-lg border rounded align-center items-center p-2">
                     <div className=' flex items-center'>
                         <div className='pl-5 w-1/4'>
-                            <Avatar src={userPic} sx={{ width: 30, height: 30 }}></Avatar>
+                            <Avatar src={userData.picture} sx={{ width: 30, height: 30 }}></Avatar>
                         </div>
                         <div className='pr-5 w-3/4'>
                             <button type="button" onClick={handleClickOpen} className='w-full'>

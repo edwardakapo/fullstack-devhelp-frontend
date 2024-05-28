@@ -17,17 +17,34 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState(getTabValueFromPath());
   const [posts, setPosts] = useState({ usersPosts: [], usersSavedPosts: [], usersStars: 0 });
-  
-  console.log(mylocation)
+  const [userInfo, setUserInfo] = useState({ username: 'Loading...', picture: '' });
 
   useEffect(() => {
+    try {
+      const storedInfo = localStorage.getItem("userInfo");
+      if (storedInfo) {
+        setUserInfo(JSON.parse(storedInfo));
+      }
+    } catch (error) {
+      console.error('Error parsing userInfo from localStorage', error);
+    }
     setValue(getTabValueFromPath());
+
   }, [mylocation.pathname]);
 
+  console.log(mylocation)
+
+  // useEffect(() => {
+  //   setValue(getTabValueFromPath());
+  // }, [mylocation.pathname]);
+  
+  const checkLoggedIn = () =>{
+    return localStorage.getItem('isLoggedIn') === "true";
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!Cookies.get('isLoggedIn')) {
+        if (!checkLoggedIn) {
           navigate('/');
           return;
         }
@@ -65,15 +82,7 @@ export default function ProfilePage() {
     );
   }
 
-  let userInfo = { username: 'Loading...', picture: '' };
-  try {
-    const storedInfo = Cookies.get('userInfo');
-    if (storedInfo) {
-      userInfo = JSON.parse(storedInfo);
-    }
-  } catch (error) {
-    console.error('Error parsing userInfo from cookie', error);
-  }
+
 
   return (
     <div className='flex flex-col space-y-20'>

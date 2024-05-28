@@ -26,8 +26,8 @@ export default function AddCommentModal(props) {
     setOpen(false);
   };
   const checkLoggedIn = () =>{
-    return Cookies.get('isLoggedIn') ? true : false;
-}
+    return localStorage.getItem('isLoggedIn') === "true";
+  }
 
   return (
     <React.Fragment>

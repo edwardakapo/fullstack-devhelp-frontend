@@ -12,9 +12,9 @@ export const login = (e , handleClose) => {
     axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT}/login`, formJson, {withCredentials : true})
     .then(response => {
       if (response.status === 200) {
-        // Store the JWT in localStorage
-        console.log(response)
-        console.log(response.Token)
+        // JWT is placed in cookie, store user data and loggedIn tracker in localStorage
+        localStorage.setItem('isLoggedIn', 'true',)
+        localStorage.setItem('userItem', response.data.userInfo)
         window.location.reload();
       }
       else{
@@ -38,9 +38,9 @@ export const register = (e , handleClose) =>{
     axios.post(`${process.env.REACT_APP_SERVER_ENDPOINT}/register`, formJson, {withCredentials : true})
     .then(response => {
       if (response.status === 200) {
-        // Store the JWT in localStorage
-        console.log(response)
-        console.log(response.Token)
+        // JWT is placed in cookie, store user data and loggedIn tracker in localStorage
+        localStorage.setItem('isLoggedIn', 'true',)
+        localStorage.setItem('userItem', response.data.userInfo)
         window.location.reload();
       }
       else{
