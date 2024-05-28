@@ -12,7 +12,31 @@ export default function Header() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     let userPic = ""
+    let cook = ""
+    const getCookie = (name) => {
+        const cookieString = document.cookie; // Get the cookies string
+        const cookies = cookieString.split(';'); // Split into individual cookies
+    
+        // Loop through cookies to find the one with the specified name
+        for (let cookie of cookies) {
+          const [cookieName, cookieValue] = cookie.split('=').map((c) => c.trim());
+          if (cookieName === name) {
+            return cookieValue; // Return the value of the cookie
+          }
+        }
+        return '';
+    }
+    const anotherIsLoggedInCheck = getCookie('isLoggedIn') === 'True';
+    console.log("another check using document.cookie", anotherIsLoggedInCheck)
+    const cook2 = anotherIsLoggedInCheck.toString()
 
+    console.log("cheking cookie for seting", Cookies.get('isLoggedIn'))
+    if(Cookies.get('isLoggedIn') === "True") {
+        cook = "True"
+    }
+    else {
+        cook = "False"
+    }
     if (Cookies.get('userInfo')) {
         userPic = JSON.parse(Cookies.get('userInfo')).picture; // parse the user cookie
     }
@@ -30,6 +54,11 @@ export default function Header() {
                 <SearchIcon fontSize='icon-small' />
                 <input type="text" className="bg-gray-100 outline-none text-sm" placeholder="Search DevHelp" />
             </form>
+            <h1>
+                Cookie 1 is {cook} <br></br>
+                Cookie 2 is {cook2}
+            </h1>
+            
             {isLoggedIn ? (
                 <AccountMenuAvatar src={userPic} />
             ) : (
