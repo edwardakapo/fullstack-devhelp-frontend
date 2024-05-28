@@ -29,16 +29,18 @@ const Styles2={
 
 export default function HeroSection() {
 
-   const [isLoggedIn, setIsLoggedIn] = useState(false)
-   let userPic = ""
+  // Set initial state for isLoggedIn
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-   if (Cookies.get('userInfo')) {
-       userPic = JSON.parse(Cookies.get('userInfo')).picture; // parse the user cookie
-   }
-   useEffect(() => {
-       const loggedIn = Cookies.get('isLoggedIn') === 'True'; // check if isLoggedIn cookie exists and is 'true'
-       setIsLoggedIn(loggedIn); // set the state
-   }, []);
+  // Get user picture from userInfo cookie if it exists
+  const userPic = Cookies.get('userInfo') ? JSON.parse(Cookies.get('userInfo')).picture : '';
+
+  useEffect(() => {
+      // Check if the isLoggedIn cookie exists and is 'true'
+      const loggedIn = Cookies.get('isLoggedIn') === 'True';
+      // Set the state
+      setIsLoggedIn(loggedIn);
+  }, []);
 
 
     const [open, setOpen] = React.useState(false);

@@ -119,6 +119,10 @@ const handleCommentChange = (event) => {
 };
 
 const handleSubmit = (event) => {
+  if (!checkLoggedIn()){
+    alert("you need to login");
+    return
+  }
   event.preventDefault(); // Prevent the default form submit action
   console.log('Comment submitted:', comment);
   const text = comment
