@@ -24,6 +24,7 @@ export default function Header() {
             return cookieValue; // Return the value of the cookie
           }
         }
+        console.log("could not find cookie")
         return '';
     }
     const anotherIsLoggedInCheck = getCookie('isLoggedIn') === 'True';
